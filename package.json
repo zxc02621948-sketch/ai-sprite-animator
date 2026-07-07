@@ -1,0 +1,13 @@
+{
+  "name": "ai-sprite-animator",
+  "version": "0.1.0",
+  "description": "綠幕動畫影片 → 透明 sprite sheet。瀏覽器內運算,零 hosting 成本。",
+  "type": "module",
+  "scripts": {
+    "dev": "node serve.js",
+    "start": "node serve.js"
+  },
+  "keywords": ["sprite-sheet", "gamedev", "chroma-key", "green-screen", "animation", "ai"],
+  "author": "Kuanming (陳冠名)",
+  "license": "MIT"
+}

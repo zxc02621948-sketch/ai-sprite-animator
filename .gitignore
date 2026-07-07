@@ -1,0 +1,11 @@
+# Private planning notes (contains personal/strategy info — NOT for public repo)
+PLAN.md
+
+# Tooling / local
+.claude/
+node_modules/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

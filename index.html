@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Sprite Animator — 綠幕影片 → 透明 Sprite Sheet</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --panel-2: #1e222b;
+      --line: #2a2f3a;
+      --text: #e6e9ef;
+      --muted: #9aa3b2;
+      --accent: #4ade80;
+      --accent-dim: #22c55e;
+      --danger: #f87171;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header h1 { font-size: 18px; margin: 0; font-weight: 650; }
+    header .tag { color: var(--accent); font-weight: 700; }
+    header p { margin: 0; color: var(--muted); font-size: 13px; }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+    .right-col { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .panel h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin: 0 0 14px; }
+    #drop {
+      border: 1.5px dashed var(--line);
+      border-radius: 10px;
+      padding: 28px 16px;
+      text-align: center;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      font-size: 14px;
+    }
+    #drop.drag { border-color: var(--accent); background: rgba(74,222,128,.06); color: var(--text); }
+    #drop b { color: var(--accent); }
+    .field { margin: 16px 0; }
+    .field > label { display: block; font-size: 13px; margin-bottom: 6px; color: var(--muted); }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .segmented { display: flex; gap: 6px; flex-wrap: wrap; }
+    .segmented button {
+      flex: 1; min-width: 44px; padding: 8px 6px; border-radius: 8px;
+      border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
+      cursor: pointer; font-size: 14px;
+    }
+    .segmented button.active { border-color: var(--accent); background: rgba(74,222,128,.12); color: var(--accent); }
+    input[type="number"], input[type="text"] {
+      width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line);
+      background: var(--panel-2); color: var(--text); font-size: 14px;
+    }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .slider-val { font-variant-numeric: tabular-nums; color: var(--text); font-size: 13px; min-width: 40px; text-align: right; }
+    .switch { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+    details { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }
+    summary { cursor: pointer; font-size: 13px; color: var(--muted); }
+    button.primary {
+      width: 100%; padding: 12px; border-radius: 10px; border: none;
+      background: var(--accent-dim); color: #06210f; font-weight: 700; font-size: 15px;
+      cursor: pointer; margin-top: 6px;
+    }
+    button.primary:disabled { opacity: .5; cursor: not-allowed; }
+    button.ghost {
+      padding: 10px 14px; border-radius: 9px; border: 1px solid var(--line);
+      background: var(--panel-2); color: var(--text); cursor: pointer; font-size: 14px;
+    }
+    button.ghost:disabled { opacity: .4; cursor: not-allowed; }
+    .checker {
+      background-color: #2a2f3a;
+      background-image:
+        linear-gradient(45deg, #313743 25%, transparent 25%),
+        linear-gradient(-45deg, #313743 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #313743 75%),
+        linear-gradient(-45deg, transparent 75%, #313743 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+    }
+    #sheetWrap { border-radius: 10px; overflow: auto; max-height: 460px; display: flex; align-items: center; justify-content: center; padding: 12px; }
+    #sheetCanvas { max-width: 100%; image-rendering: auto; }
+    .preview-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+    #previewCanvas { border-radius: 10px; }
+    .stats { font-size: 13px; color: var(--muted); }
+    .stats b { color: var(--text); font-variant-numeric: tabular-nums; }
+    .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    #status { font-size: 13px; color: var(--muted); margin-top: 10px; min-height: 18px; }
+    #status.err { color: var(--danger); }
+    .empty { color: var(--muted); text-align: center; padding: 60px 20px; font-size: 14px; }
+    .bar { height: 6px; background: var(--panel-2); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+    .bar > div { height: 100%; width: 0; background: var(--accent); transition: width .1s; }
+    #trimPanel label { color: var(--muted); }
+    #trimPanel .field label span { color: var(--text); font-variant-numeric: tabular-nums; }
+    #trimVideo { width: 100%; border-radius: 10px; background: #000; display: block; max-height: 340px; object-fit: contain; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI Sprite Animator <span class="tag">MVP</span></h1>
+    <p>綠幕影片 → 去背 → 抽格 → trim → 透明 sprite sheet(全程瀏覽器內運算,不上傳)</p>
+  </header>
+
+  <main>
+    <!-- controls -->
+    <section class="panel">
+      <h2>1 · 輸入</h2>
+      <div id="drop">
+        拖入綠幕影片,或 <b>點此選擇</b><br />
+        <small>建議 mp4 / H.264 或 webm</small>
+        <input id="file" type="file" accept="video/*" hidden />
+      </div>
+      <div id="videoInfo" class="stats" style="margin-top:10px;"></div>
+
+      <h2 style="margin-top:22px;">2 · 格數 / 佈局</h2>
+      <div class="field">
+        <label>格數(frames)</label>
+        <div class="segmented" id="framePresets">
+          <button data-frames="8">8</button>
+          <button data-frames="12" class="active">12</button>
+          <button data-frames="16">16</button>
+          <button data-frames="24">24</button>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <input id="frameCount" type="number" min="1" max="120" value="12" />
+          <span class="stats" style="white-space:nowrap;">自訂</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>欄數(0 = 自動接近正方)</label>
+        <input id="columns" type="number" min="0" max="32" value="0" />
+      </div>
+      <div class="field">
+        <label>每格長邊上限 px（<b>0 = 不縮放，保留完整解析度</b>；設數字才會縮小省容量）</label>
+        <input id="cellSize" type="number" min="0" max="4096" value="0" />
+      </div>
+      <label class="switch"><input id="pingpong" type="checkbox" /> 正反輪播(乒乓,消除待機斷點,輸出展開成 2N-2 格)</label>
+
+      <h2 style="margin-top:22px;">3 · 綠幕去背</h2>
+      <label class="switch"><input id="removeBg" type="checkbox" checked /> 開啟去背</label>
+      <div id="chromaControls">
+        <div class="field">
+          <label>相似度 similarity(越高吃掉越多綠)</label>
+          <div class="row"><input id="similarity" type="range" min="0" max="1" step="0.01" value="0.35" /><span class="slider-val" id="similarityVal">0.35</span></div>
+        </div>
+        <div class="field">
+          <label>邊緣柔化 smoothness</label>
+          <div class="row"><input id="smoothness" type="range" min="0" max="0.5" step="0.01" value="0.10" /><span class="slider-val" id="smoothnessVal">0.10</span></div>
+        </div>
+        <div class="field">
+          <label>溢色抑制 spill(去綠邊)</label>
+          <div class="row"><input id="spill" type="range" min="0" max="1" step="0.01" value="0.40" /><span class="slider-val" id="spillVal">0.40</span></div>
+        </div>
+      </div>
+
+      <details>
+        <summary>進階</summary>
+        <div class="field">
+          <label>每格 trim 保留邊距 pad(px)</label>
+          <input id="pad" type="number" min="0" max="32" value="1" />
+        </div>
+        <div class="field">
+          <label>格間空隙 gap(px)</label>
+          <input id="gap" type="number" min="0" max="32" value="0" />
+        </div>
+      </details>
+
+      <button id="run" class="primary" disabled>生成 Sprite Sheet</button>
+      <div class="bar" id="progWrap" hidden><div id="prog"></div></div>
+      <div id="status"></div>
+    </section>
+
+    <!-- output column -->
+    <div class="right-col">
+      <section class="panel">
+        <h2>結果</h2>
+        <div id="output">
+          <div class="empty">上傳綠幕影片並生成後,這裡會顯示透明 sprite sheet 與動畫預覽。</div>
+        </div>
+      </section>
+
+      <section class="panel" id="trimSection" hidden>
+        <h2>片段裁切</h2>
+        <div id="trimPanel"></div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
