@@ -86,12 +86,12 @@ The tool uses the browser's **native video decoding** instead of `ffmpeg.wasm`, 
 
 ## Part of the AI Game Asset Toolkit
 
-A small set of free, browser-based tools for AI game devs — chain them:
+A small suite of free, browser-based tools for AI game-asset prep. They solve
+different problems — pick the one that matches what you already have:
 
-**green-screen video → [AI Sprite Animator](https://zxc02621948-sketch.github.io/ai-sprite-animator/) (this) → [AI Sprite Align Tool](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) → game**
-
-- [Game Asset BG Remover](https://zxc02621948-sketch.github.io/game-asset-bg-remover/) — remove backgrounds from game art
-- [AI Sprite Align Tool](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) — stabilize/align sprite-sheet frames
+- **A green-screen animation video?** → **AI Sprite Animator** (this tool) — its output is already trimmed and frame-aligned, ready to drop into a game.
+- **A sprite sheet that jitters when played?** → [AI Sprite Align Tool](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) — align and stabilize its frames.
+- **Game art that needs its background removed?** → [Game Asset BG Remover](https://zxc02621948-sketch.github.io/game-asset-bg-remover/).
 
 ## ☕ Support
 
@@ -184,12 +184,11 @@ Windows 可直接雙擊 **`run.bat`**。倉庫附了測試片 `test-assets/green
 
 ### AI 遊戲素材工具組的一員
 
-一組給 AI 遊戲開發者的免費瀏覽器工具,可串起來用:
+一組給 AI 遊戲開發者的免費瀏覽器工具,各自解決不同問題 —— 依你手上的素材選:
 
-**綠幕影片 → [AI Sprite Animator](https://zxc02621948-sketch.github.io/ai-sprite-animator/)(本工具)→ [AI 動畫格對齊工具](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) → 遊戲**
-
-- [遊戲素材去背助手](https://zxc02621948-sketch.github.io/game-asset-bg-remover/) —— 幫遊戲素材去背
-- [AI 動畫格對齊工具](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) —— 讓 sprite sheet 每格對齊、播放更穩
+- **手上是綠幕動畫影片?** → **AI Sprite Animator**(本工具)—— 輸出已裁切、每格對齊,可直接放進遊戲。
+- **手上是播放會抖的 sprite sheet?** → [AI 動畫格對齊工具](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) —— 對齊、穩定每一格。
+- **想幫遊戲素材去背?** → [遊戲素材去背助手](https://zxc02621948-sketch.github.io/game-asset-bg-remover/)。
 
 ### ☕ 支持作者
 
