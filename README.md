@@ -85,14 +85,14 @@ green-screen video
 
 The tool uses the browser's **native video decoding** instead of `ffmpeg.wasm`, so there's no `SharedArrayBuffer` / COOP-COEP requirement and it deploys to any static host as-is. The `src/core/` modules (chroma / trim / pack) are pure functions over RGBA buffers, so a future CLI (native `ffmpeg` + `sharp`) can reuse them verbatim.
 
-## Part of the AI Game Asset Toolkit
+## 🧰 My free tools
 
-A small suite of free, browser-based tools for AI game-asset prep. They solve
-different problems — pick the one that matches what you already have:
+Free tools I build for AI creators (browser-based unless noted):
 
-- **A green-screen animation video?** → **AI Sprite Animator** (this tool) — its output is already trimmed and frame-aligned, ready to drop into a game.
-- **A sprite sheet that jitters when played?** → [AI Sprite Align Tool](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) — align and stabilize its frames.
-- **Game art that needs its background removed?** → [Game Asset BG Remover](https://zxc02621948-sketch.github.io/game-asset-bg-remover/).
+- **AI Sprite Animator** — green-screen animation video → transparent sprite sheet · **you're here**
+- [AI Sprite Align Tool](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) — align & stabilize sprite-sheet frames
+- [Game Asset BG Remover](https://zxc02621948-sketch.github.io/game-asset-bg-remover/) — remove backgrounds from game art
+- [Local Server Launcher](https://github.com/zxc02621948-sketch/server-launcher) — one-click desktop GUI to run your local dev servers (Windows)
 
 ## ☕ Support
 
@@ -184,13 +184,14 @@ Windows 可直接雙擊 **`run.bat`**。倉庫附了測試片 `test-assets/green
 
 用瀏覽器**原生影片解碼**而非 `ffmpeg.wasm`,所以不需要 `SharedArrayBuffer` / COOP-COEP,任何靜態空間都能直接部署。`src/core/`(chroma / trim / pack)是對 RGBA 緩衝的純函式,之後 CLI 版(原生 `ffmpeg` + `sharp`)可原封重用。
 
-### AI 遊戲素材工具組的一員
+### 🧰 我的免費工具
 
-一組給 AI 遊戲開發者的免費瀏覽器工具,各自解決不同問題 —— 依你手上的素材選:
+我為 AI 創作者做的免費工具(未註明皆為瀏覽器工具):
 
-- **手上是綠幕動畫影片?** → **AI Sprite Animator**(本工具)—— 輸出已裁切、每格對齊,可直接放進遊戲。
-- **手上是播放會抖的 sprite sheet?** → [AI 動畫格對齊工具](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) —— 對齊、穩定每一格。
-- **想幫遊戲素材去背?** → [遊戲素材去背助手](https://zxc02621948-sketch.github.io/game-asset-bg-remover/)。
+- **AI Sprite Animator** —— 綠幕動畫影片 → 透明 sprite sheet · **你在這**
+- [AI 動畫格對齊工具](https://zxc02621948-sketch.github.io/ai-sprite-align-tool/) —— 對齊、穩定 sprite sheet 每一格
+- [遊戲素材去背助手](https://zxc02621948-sketch.github.io/game-asset-bg-remover/) —— 幫遊戲素材去背
+- [本地服務器啟動台](https://github.com/zxc02621948-sketch/server-launcher) —— 一鍵啟動本地 dev server 的桌面 GUI(Windows)
 
 ### ☕ 支持作者
 
