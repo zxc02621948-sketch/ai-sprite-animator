@@ -16,12 +16,13 @@ Made for AI game devs: generate a character animation as a green-screen video (S
 
 ## Demo
 
-<table>
-<tr>
-<td align="center"><b>Input — green-screen video</b><br><img src="docs/input-green.gif" width="220" alt="green screen input"></td>
-<td align="center"><b>Output — transparent sprite sheet</b><br><img src="docs/output-sprite.gif" width="220" alt="transparent sprite sheet output"></td>
-</tr>
-</table>
+<div align="center">
+
+**Green-screen video → transparent, game-ready sprite sheet**
+
+<img src="docs/before-after.gif" width="520" alt="green-screen video to transparent sprite sheet">
+
+</div>
 
 ## The idea: video → slice, not frame-by-frame AI
 
@@ -119,12 +120,13 @@ Code is released under the [MIT License](LICENSE). Demo images, GIFs, sprite she
 
 ### 展示效果
 
-<table>
-<tr>
-<td align="center"><b>輸入 — 綠幕影片</b><br><img src="docs/input-green.gif" width="220" alt="綠幕輸入"></td>
-<td align="center"><b>輸出 — 透明 sprite sheet</b><br><img src="docs/output-sprite.gif" width="220" alt="透明 sprite sheet 輸出"></td>
-</tr>
-</table>
+<div align="center">
+
+**綠幕影片 → 透明、可直接進遊戲的 sprite sheet**
+
+<img src="docs/before-after.gif" width="520" alt="綠幕影片轉透明 sprite sheet">
+
+</div>
 
 ### 核心點子:用「影片切片」,不要逐格 AI 生成
 
